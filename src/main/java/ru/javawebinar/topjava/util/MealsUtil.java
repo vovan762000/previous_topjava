@@ -43,7 +43,7 @@ public class MealsUtil {
                 .collect(Collectors.toList());
     }
 
-    public static List<MealTo> getAllMealTo(List<Meal> meals,int caloriesPerDay){
+    public static List<MealTo> filteredByStreams(List<Meal> meals,int caloriesPerDay){
         return filteredByStreams(meals,LocalTime.MIN,LocalTime.MAX,caloriesPerDay);
     }
 
