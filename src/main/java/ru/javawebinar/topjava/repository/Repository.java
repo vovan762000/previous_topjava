@@ -11,7 +11,5 @@ public interface Repository<T, ID> {
 
     boolean save(T object);
 
-    boolean update(T object);
-
     boolean delete(ID id) throws NotFoundException;
 }

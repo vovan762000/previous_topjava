@@ -7,7 +7,6 @@ import ru.javawebinar.topjava.util.NotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.javawebinar.topjava.util.MealsUtil.id;
 import static ru.javawebinar.topjava.util.MealsUtil.mapOfMeals;
 
 
@@ -25,17 +24,11 @@ public class MealRepositoryInmemory implements Repository<Meal, Integer> {
 
     @Override
     public boolean save(Meal meal) {
-        return mapOfMeals.put(id.incrementAndGet(), new Meal(meal)) != null;
-    }
-
-    @Override
-    public boolean update(Meal meal) {
-        Meal updatedMeal = new Meal(meal);
-        return mapOfMeals.put(meal.getId(), updatedMeal) != null;
+        return mapOfMeals.put(meal.getId(), meal) != null;
     }
 
     @Override
     public boolean delete(Integer id) throws NotFoundException {
-        return mapOfMeals.remove(getById(id)) != null;
+        return mapOfMeals.remove(id) != null;
     }
 }
