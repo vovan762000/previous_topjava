@@ -36,21 +36,13 @@ public class MealServlet extends HttpServlet {
         switch (action != null ? action : "") {
             case "delete" -> {
                 int mealId = getId(req, "id");
-                try {
                     repository.delete(mealId);
                     log.info("delete meal id = {}", mealId);
-                } catch (NotFoundException e) {
-                    e.printStackTrace();
-                }
                 resp.sendRedirect("meals");
             }
             case "edit" -> {
                 int mealId = getId(req, "id");
-                try {
                     req.setAttribute("meal", repository.getById(mealId));
-                } catch (NotFoundException e) {
-                    e.printStackTrace();
-                }
                 req.getRequestDispatcher("/meal.jsp").forward(req, resp);
             }
             case "add" -> {
