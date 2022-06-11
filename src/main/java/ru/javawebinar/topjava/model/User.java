@@ -33,6 +33,10 @@ public class User extends AbstractNamedEntity {
         setRoles(roles);
     }
 
+    public User(String name,String email,String password,Role... roles){
+        this(null,name,email,password,DEFAULT_CALORIES_PER_DAY,true,Arrays.asList(roles));
+    }
+
     public String getEmail() {
         return email;
     }
