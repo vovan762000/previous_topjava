@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.repository.inmemory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.UserUtil;
@@ -22,8 +21,8 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.meals.forEach(m->save(m, UserUtil.USER_ID));
-        MealsUtil.mealsOfAdmin.forEach(m->save(m,UserUtil.ADMIN_ID));
+        MealsUtil.meals.forEach(m -> save(m, UserUtil.USER_ID));
+        MealsUtil.mealsOfAdmin.forEach(m -> save(m, UserUtil.ADMIN_ID));
     }
 
     @Override
@@ -59,10 +58,10 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public Collection<MealTo> getFiltered(LocalDateTime start, LocalDateTime end, int userId) {
-        return MealsUtil.getTos(getAll(userId),MealsUtil.DEFAULT_CALORIES_PER_DAY)
+    public Collection<Meal> getFiltered(LocalDateTime start, LocalDateTime end, int userId) {
+        return getAll(userId)
                 .stream()
-                .filter(m-> DateTimeUtil.isBetween(m.getDateTime(),start,end))
+                .filter(m -> DateTimeUtil.isBetweenHalfOpen(m.getDateTime(), start, end))
                 .collect(Collectors.toList());
     }
 }

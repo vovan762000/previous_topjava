@@ -5,14 +5,17 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.javawebinar.topjava.util.DateTimeUtil.*;
+import static ru.javawebinar.topjava.util.MealsUtil.getTos;
 
 @Controller
 public class MealRestController {
@@ -31,7 +34,7 @@ public class MealRestController {
 
     public List<MealTo> getAll() {
         log.info("get all meals");
-        return service.getAll(SecurityUtil.authUserId());
+        return getTos(service.getAll(SecurityUtil.authUserId()),SecurityUtil.authUserCaloriesPerDay());
     }
 
     public void delete(int id) {
@@ -51,6 +54,10 @@ public class MealRestController {
 
     public List<MealTo> getFiltered(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
         log.info("get meals from date {} to date {} from time {} to time {}", startDate, endDate, startTime, endTime);
-        return service.getFiltered(LocalDateTime.of(startDate, startTime), LocalDateTime.of(endDate, endTime), SecurityUtil.authUserId());
+        List<Meal> meals = service.getFiltered(getStartOfDay(startDate), getEndOfDay(endDate), SecurityUtil.authUserId());
+        return getTos(meals, SecurityUtil.authUserCaloriesPerDay())
+                .stream()
+                .filter(m->isBetweenHalfOpen(m.getDateTime().toLocalTime(),startTime,endTime))
+                .collect(Collectors.toList());
     }
 }

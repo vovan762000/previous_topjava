@@ -60,7 +60,6 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
         switch (action == null ? " " : action) {
             case "delete":
                 int id = getId(request);
@@ -76,18 +75,19 @@ public class MealServlet extends HttpServlet {
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
-            case "all":
-                log.info("getAll");
-                request.setAttribute("meals",controller.getAll());
-                request.getRequestDispatcher("/meals.jsp").forward(request, response);
-                break;
-            default:
+            case "filter":
                 LocalDate fromDate = LocalDate.parse(request.getParameter("fromDate"));
                 LocalDate toDate = LocalDate.parse(request.getParameter("toDate"));
                 LocalTime fromTime = LocalTime.parse(request.getParameter("fromTime"));
                 LocalTime toTime = LocalTime.parse(request.getParameter("toTime"));
                 request.setAttribute("meals",controller.getFiltered(fromDate,toDate,fromTime,toTime));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
+            case "all"," ":
+                log.info("getAll");
+                request.setAttribute("meals",controller.getAll());
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+                break;
+
         }
     }
 

@@ -24,8 +24,8 @@ public class MealService {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
-    public List<MealTo> getAll(int userId) {
-        return MealsUtil.getTos(repository.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY);
+    public List<Meal> getAll(int userId) {
+        return (List<Meal>) repository.getAll(userId);
     }
 
     public void delete(int id,int userId){
@@ -40,8 +40,9 @@ public class MealService {
         return repository.save(meal, userId);
     }
 
-    public List<MealTo> getFiltered(LocalDateTime start, LocalDateTime end, int userId){
-        return (List<MealTo>) repository.getFiltered(start,end,userId);
+    public List<Meal> getFiltered(LocalDateTime start, LocalDateTime end, int userId){
+        return (List<Meal>) repository.getFiltered(start,end,userId);
     }
+    public void test(){}
 
 }

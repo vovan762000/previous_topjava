@@ -22,9 +22,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getParameter("userName"));
         SecurityUtil.setAuthUserId(req.getParameter("userName"));
-        System.out.println(SecurityUtil.authUserId());
         resp.sendRedirect("index.html");
     }
 }
