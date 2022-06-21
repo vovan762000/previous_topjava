@@ -113,4 +113,10 @@ public class MealServiceTest {
         created.setDateTime(MEAL1.getDateTime());
         assertThrows(DataAccessException.class,()->service.create(created,USER_ID));
     }
+
+    @Test
+    public void getBetweenNullDate(){
+        List<Meal> meals = service.getBetweenInclusive(null,null,USER_ID);
+        assertMatch(meals,MEAL7,MEAL6,MEAL5,MEAL4,MEAL3,MEAL2,MEAL1);
+    }
 }
