@@ -17,11 +17,12 @@ import java.time.Month;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.slf4j.bridge.SLF4JBridgeHandler.install;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 import static ru.javawebinar.topjava.UserTestData.NOT_FOUND;
-
+import static ru.javawebinar.topjava.MealTestData.MEAL_MATHER;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -31,19 +32,13 @@ import static ru.javawebinar.topjava.UserTestData.NOT_FOUND;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
-    static {
-        // Only for postgres driver logging
-        // It uses java.util.logging and logged via jul-to-slf4j bridge
-        SLF4JBridgeHandler.install();
-    }
-
     @Autowired
     private MealService service;
 
     @Test
     public void get() {
         Meal meal = service.get(MEAL1_ID, USER_ID);
-        assertMatch(meal, MEAL1);
+        MEAL_MATHER.assertMatch(meal, MEAL1);
     }
 
     @Test
@@ -75,20 +70,20 @@ public class MealServiceTest {
     @Test
     public void getBetweenInclusive() {
         List<Meal> meals = service.getBetweenInclusive(LocalDate.of(2020, Month.JANUARY, 31),LocalDate.of(2020, Month.JANUARY, 31),USER_ID);
-        assertMatch(meals,MEAL7,MEAL6,MEAL5,MEAL4);
+        MEAL_MATHER.assertMatch(meals,MEAL7,MEAL6,MEAL5,MEAL4);
     }
 
     @Test
     public void getAll() {
         List<Meal> meals = service.getAll(USER_ID);
-        assertMatch(meals, MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
+        MEAL_MATHER.assertMatch(meals, MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
     }
 
     @Test
     public void update() {
         Meal updated = getUpdated();
         service.update(updated,USER_ID);
-        assertMatch(service.get(MEAL1_ID,USER_ID),updated);
+        MEAL_MATHER.assertMatch(service.get(MEAL1_ID,USER_ID),updated);
     }
 
     @Test
@@ -103,8 +98,8 @@ public class MealServiceTest {
         Integer newId = created.getId();
         Meal newMeal = getNew();
         newMeal.setId(newId);
-        assertMatch(created,newMeal);
-        assertMatch(service.get(newId,USER_ID),newMeal);
+        MEAL_MATHER.assertMatch(created,newMeal);
+        MEAL_MATHER.assertMatch(service.get(newId,USER_ID),newMeal);
     }
 
     @Test
@@ -117,6 +112,6 @@ public class MealServiceTest {
     @Test
     public void getBetweenNullDate(){
         List<Meal> meals = service.getBetweenInclusive(null,null,USER_ID);
-        assertMatch(meals,MEAL7,MEAL6,MEAL5,MEAL4,MEAL3,MEAL2,MEAL1);
+        MEAL_MATHER.assertMatch(meals,MEAL7,MEAL6,MEAL5,MEAL4,MEAL3,MEAL2,MEAL1);
     }
 }
