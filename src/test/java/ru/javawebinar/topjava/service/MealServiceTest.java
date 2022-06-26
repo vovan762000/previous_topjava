@@ -1,7 +1,14 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.AfterClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,10 +18,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertThrows;
+import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
@@ -26,9 +39,38 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
-
+    private static final Logger log = getLogger(MealServiceTest.class);
     @Autowired
     private MealService service;
+
+    private static final StringBuilder builder = new StringBuilder();
+
+    @Rule
+    public final TestName name = new TestName();
+
+    @Rule
+    public final TestRule watchman = new TestWatcher() {
+        Instant start;
+        Instant finish;
+        @Override
+        protected void starting(Description description) {
+            start = Instant.now();
+        }
+
+        @Override
+        protected void finished(Description description) {
+            finish = Instant.now();
+            long duration = Duration.between(start,finish).toMillis();
+            builder.append(String.format("%-30s %-10s%n",name.getMethodName(),duration));
+            log.info("Test {} took {}",name.getMethodName(),duration);
+        }
+    };
+
+    @AfterClass
+    public static void afterClass() throws Exception {
+        System.out.print(builder);
+    }
+
 
     @Test
     public void delete() {
