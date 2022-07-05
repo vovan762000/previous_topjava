@@ -25,7 +25,7 @@ public class DataJpaMealRepository implements MealRepository {
     public Meal save(Meal meal, int userId) {
         User user = crudUserRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
         meal.setUser(user);
-        return (!meal.isNew() && get(meal.getId(), userId) == null ? null : crudMealRepository.save(meal));
+        return (!meal.isNew() && get(meal.id(), userId) == null ? null : crudMealRepository.save(meal));
     }
 
     @Override
