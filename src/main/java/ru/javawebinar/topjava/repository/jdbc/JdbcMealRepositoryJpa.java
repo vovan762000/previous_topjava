@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-@Profile("!jdbc")
+@Profile("postgres")
 public class JdbcMealRepositoryJpa extends JdbcMealRepository {
     public JdbcMealRepositoryJpa(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         super(jdbcTemplate, namedParameterJdbcTemplate);

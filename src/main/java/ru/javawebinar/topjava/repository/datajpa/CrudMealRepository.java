@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     Meal findByIdAndUserId(int id,int userId);
@@ -21,4 +22,6 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
 
     List<Meal> findAllByDateTimeGreaterThanEqualAndDateTimeLessThanAndUserIdOrderByDateTimeDesc(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
 
+    @Query("SELECT m FROM Meal m LEFT JOIN FETCH m.user WHERE m.id=:id AND m.user.id=:userId")
+    Optional<Meal> getWithUser(@Param("id") int id,@Param("userId") int userId);
 }

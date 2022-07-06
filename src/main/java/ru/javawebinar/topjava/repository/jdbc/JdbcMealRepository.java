@@ -59,4 +59,9 @@ public abstract class JdbcMealRepository implements MealRepository {
 
     @Override
     public abstract List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
+
+    @Override
+    public Meal getWithUser(int id, int userId) {
+        throw new UnsupportedOperationException();
+    }
 }
