@@ -28,8 +28,8 @@
         <postgresql.version>42.4.0</postgresql.version>
 
         <!-- Hibernate -->
-        <hibernate.version>5.6.9.Final</hibernate.version>
-        <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
+        <hibernate.version>6.1.0.Final</hibernate.version>
+        <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
         <javax-el.version>3.0.1-b12</javax-el.version>
 
         <!--Cache-->
@@ -60,7 +60,7 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
@@ -126,7 +126,7 @@
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
-            <version>1.1.0</version>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.ehcache</groupId>
@@ -145,7 +145,7 @@
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>2.4.0-b180830.0438</version>
+            <version>4.0.0</version>
         </dependency>
 
         <!--Web-->
@@ -165,7 +165,7 @@
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.2</version>
         </dependency>
 
         <!--Test-->
