@@ -62,8 +62,4 @@ public class JpaMealRepository implements MealRepository {
                 .getResultList();
     }
 
-    @Override
-    public Meal getWithUser(int id, int userId) {
-        throw new UnsupportedOperationException();
-    }
 }
