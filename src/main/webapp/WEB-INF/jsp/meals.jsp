@@ -7,11 +7,11 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <head>
     <title>Meals</title>
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/style.css">
 </head>
 <body>
 <section>
-    <h3><a href="index.jsp">Home</a></h3>
+    <h3><a href="${pageContext.request.contextPath}">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
     <form method="get" action="meals/filter">
