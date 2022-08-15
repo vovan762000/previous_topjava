@@ -126,12 +126,7 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
-<%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">--%>
-<%--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>--%>
-<%--<script src="https://unpkg.com/jquery-datetimepicker@2.5.21/build/jquery.datetimepicker.full.min.js"></script>--%>
-<%--<script>--%>
-<%--    jQuery('#datetimepicker').datetimepicker();--%>
-<%--</script>--%>
+
 <script type="text/javascript">
     const i18n = [];
     i18n["addTitle"] = '<spring:message code="meal.add"/>';
